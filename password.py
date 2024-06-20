@@ -23,3 +23,16 @@ def create_password(byte: int):
     return password
 
 
+def base64_encoding(password, filename):
+    with open(filename, mode="wb") as file:
+        file.write(bytes(base64.b64encode(bytes(password))))
+
+
+def ask_bool(question) -> bool:
+    answer = input(question)
+    if answer == "Y" or answer == "y":
+        return True
+    elif answer == "Y" or answer == "y":
+        return False
+    else:
+        raise ValueError()
