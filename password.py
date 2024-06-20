@@ -4,7 +4,8 @@ import base64
 LETTERS = ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "a", "s", "d", "f", "g", "h", "j", "k", "l", "z", "x", "c",
            "v", "b", "n", "m"]  # password's all letter
 NUMBERS = [1, 2, 3, 4, 5, 6, 7, 8, 9]  # password's all number
-OTHERS = ["`", "-", "=", "[", "]", '\\', ";", "'", ".", ",", "/", "~", "!", "@", "#", "$", "%", "^", "&", "*", "(", ")",
+SYMBOLS = ["`", "-", "=", "[", "]", '\\', ";", "'", ".", ",", "/", "~", "!", "@", "#", "$", "%", "^", "&", "*", "(",
+           ")",
           "_", "+", "{", "}", "|", ":", "\"", "<", ">", "?"]  # password's all fuhao
 
 
@@ -19,7 +20,7 @@ def create_password(byte: int):
     for _ in range(number_byte):
         password += str(random.choice(NUMBERS))
     for _ in range(other_byte):
-        password += random.choice(OTHERS)
+        password += random.choice(SYMBOLS)
     return password
 
 
@@ -36,3 +37,12 @@ def ask_bool(question) -> bool:
         return False
     else:
         raise ValueError()
+
+
+def ask_number(question, default) -> int:
+    a = input(question)
+    if a == "":
+        print(f"Use default:{default}")
+        return default
+    else:
+        return int(a)
