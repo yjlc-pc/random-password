@@ -9,22 +9,25 @@ SYMBOLS = ["`", "-", "=", "[", "]", '\\', ";", "'", ".", ",", "/", "~", "!", "@"
           "_", "+", "{", "}", "|", ":", "\"", "<", ">", "?"]  # password's all fuhao
 
 
-def create_password(byte: int):
+def create_password(byte, letter_byte="", number_byte="", symbol_byte=""):
+    if letter_byte == "" or letter_byte == "random":
+        letter_byte = random.randrange(0, byte)
+    if number_byte == "" or number_byte == "random":
+        number_byte = random.randrange(0, byte)
+    if symbol_byte == "" or symbol_byte == "random":
+        symbol_byte = byte - letter_byte - number_byte
+
     password = ""
-    letter_byte = random.randrange(0, byte)
-    number_byte = random.randrange(0, byte - letter_byte)
-    other_byte = byte - letter_byte - number_byte
-    print(letter_byte, number_byte, other_byte)
     for _ in range(letter_byte):
         password += random.choice(LETTERS)
     for _ in range(number_byte):
         password += str(random.choice(NUMBERS))
-    for _ in range(other_byte):
+    for _ in range(symbol_byte):
         password += random.choice(SYMBOLS)
     return password
 
 
-def base64_encoding(password, filename):
+def base64_write(password, filename):
     with open(filename, mode="wb") as file:
         file.write(bytes(base64.b64encode(bytes(password))))
 
