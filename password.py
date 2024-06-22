@@ -6,24 +6,35 @@ LETTERS = ["q", "w", "e", "r", "t", "y", "u", "i", "o", "p", "a", "s", "d", "f",
 NUMBERS = [1, 2, 3, 4, 5, 6, 7, 8, 9]  # password's all number
 SYMBOLS = ["`", "-", "=", "[", "]", '\\', ";", "'", ".", ",", "/", "~", "!", "@", "#", "$", "%", "^", "&", "*", "(",
            ")",
-          "_", "+", "{", "}", "|", ":", "\"", "<", ">", "?"]  # password's all fuhao
+           "_", "+", "{", "}", "|", ":", "\"", "<", ">", "?"]  # password's all symbol
 
 
 def create_password(byte, letter_byte="", number_byte="", symbol_byte=""):
+    global state
     if letter_byte == "" or letter_byte == "random":
+        state = "random"
         letter_byte = random.randrange(0, byte)
     if number_byte == "" or number_byte == "random":
+        state = "random"
         number_byte = random.randrange(0, byte)
     if symbol_byte == "" or symbol_byte == "random":
+        state = "random"
         symbol_byte = byte - letter_byte - number_byte
 
     password = ""
-    for _ in range(letter_byte):
-        password += random.choice(LETTERS)
-    for _ in range(number_byte):
-        password += str(random.choice(NUMBERS))
-    for _ in range(symbol_byte):
-        password += random.choice(SYMBOLS)
+    if state != "random":
+        for _ in range(letter_byte):
+            password += random.choice(LETTERS)
+        for _ in range(number_byte):
+            password += str(random.choice(NUMBERS))
+        for _ in range(symbol_byte):
+            password += random.choice(SYMBOLS)
+    else:
+        for _ in range(byte):
+            password += random.choice(LETTERS)
+            password += str(random.choice(NUMBERS))
+            password += random.choice(SYMBOLS)
+    random.shuffle(list(password))
     return password
 
 
@@ -42,7 +53,7 @@ def ask_bool(question) -> bool:
         raise ValueError()
 
 
-def ask_number(question, default) -> int:
+def ask_number(question, default):
     a = input(question)
     if a == "":
         print(f"Use default:{default}")
