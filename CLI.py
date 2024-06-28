@@ -25,9 +25,9 @@ def ask_questions():
 
 def output(answer: dict):
     if answer["letter"] == "random" and answer["number"] == "random" and answer["symbol"] == "random":
-        password_str = ps.create_password(answer["byte"])
+        password_str = ps.create_password(answer["byte"], answer["letter"], answer["number"], answer["symbol"])
     else:
-        password_str = ps.create_password(answer["letter"], answer["number"], answer["symbol"])
+        password_str = ps.create_password(answer["byte"], answer["letter"], answer["number"], answer["symbol"])
     print(f"your password is {password_str}")
 
 
